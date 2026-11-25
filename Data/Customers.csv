@@ -1,0 +1,241 @@
+CustomerID,CustomerName,City,Country,Segment
+1001,Emma Johnson,Brisbane,Australia,Consumer
+1002,Adam Martin,Melbourne,Australia,Corporate
+1003,Lina Johnson,New York,United States,Consumer
+1004,Ethan Khan,  montreal ,Canada,Corporate
+1005,Chloe Wilson,Chicago,USA,Small Business
+1006,  nora wilson ,Manchester,UK,Small Business
+1007,Hana Moreau,Bristol,United Kingdom,Consumer
+1008,Lucas Miller,Chicago,USA,Consumer
+1009,Daniel Martin,Toronto,Canada,Small Business
+1010,Liam Moreau,Bristol,United Kingdom,Consumer
+1011,Mia Khan,Seattle,United States,Small Business
+1012,Liam Dubois,Melbourne,Australia,Corporate
+1013,EMMA BROWN,Berlin,Germany,Consumer
+1014,Ethan Brown,Vancouver,Canada,Consumer
+1015,Omar Moreau,Seattle,United States,Consumer
+1016,Mia Khan,  leeds ,United Kingdom,Consumer
+1017,Lina Novak,  vancouver ,Canada,Consumer
+1018,Mia   Novak,Munich,Germany,Corporate
+1019,Ali Johnson,New York,United States,Small Business
+1020,  omar dubois ,New York,USA,Small Business
+1021,Emma Novak,Sydney,Australia,Small Business
+1022,Ethan Garcia,Austin,United States,Corporate
+1023,Emma Garcia,Denver,USA,Consumer
+1024,Sara Schmidt,Vancouver,Canada,Consumer
+1025,Adam Wilson,Brisbane,Australia,Consumer
+1026,Liam Taylor,Bristol,United Kingdom,Consumer
+1027,Omar Schmidt,Brisbane,Australia,Corporate
+1028,Ali Taylor,Seattle,United States,Consumer
+1029,Emma Larsen,AUSTIN,United States,Small Business
+1030,Omar Smith,Seattle,United States,Corporate
+1031,Daniel Johnson,  munich ,Germany,Corporate
+1032,Sofia Miller,Bristol,United Kingdom,Corporate
+1033,Lina Taylor,Bristol,United Kingdom,Small Business
+1034,Daniel Miller,Chicago,United States,Consumer
+1035,Hana Wilson,Berlin,Germany,Small Business
+1036,Lucas Khan,Munich,Germany,Consumer
+1037,Lina Miller,Melbourne,Australia,Small Business
+1038,  ali schmidt ,Leeds,United Kingdom,Corporate
+1039,Chloe Schmidt,Cologne,Germany,Corporate
+1040,Olivia Wilson,Bristol,UK,Small Business
+1041,Leo   Wilson,Leeds,UK,Small Business
+1042,Daniel Miller,Denver,United States,Consumer
+1043,Sara Garcia,Denver,United States,Small Business
+1044,Omar Johnson,Vancouver,Canada,Consumer
+1045,Nora Walker,Chicago,United States,Consumer
+1046,Emma Larsen,  austin ,United States,Corporate
+1047,SOFIA MOREAU,Cologne,Germany,Consumer
+1048,Omar Larsen,  new york ,USA,Consumer
+1049,Leo Johnson,  hamburg ,Germany,Small Business
+1050,Ethan   Taylor,  lyon ,France,Consumer
+1051,Omar Walker,Brisbane,Australia,Corporate
+1052,Olivia Walker,Denver,United States,Corporate
+1053,Mia Walker,London,United Kingdom,Consumer
+1054,Jonas Wilson,Berlin,Germany,Small Business
+1055,Omar Garcia,Bristol,UK,Small Business
+1056,  sara brown ,London,United Kingdom,Consumer
+1057,Nora Walker,Seattle,USA,Consumer
+1058,Jonas Johnson,Melbourne,Australia,Consumer
+1059,Omar Dubois,New York,USA,Small Business
+1060,LUCAS SCHMIDT,  marseille ,France,Small Business
+1061,Daniel Johnson,Bristol,UK,Small Business
+1062,Ali Garcia,Seattle,United States,Consumer
+1063,Emma Taylor,Toronto,Canada,Corporate
+1064,Lina Garcia,Hamburg,Germany,Consumer
+1065,Adam Larsen,New York,United States,Small Business
+1066,  emma wilson ,  london ,United Kingdom,Small Business
+1067,Lina Brown,Marseille,France,Consumer
+1068,Ava Novak,Austin,United States,Corporate
+1069,Olivia   Moreau,Cologne,Germany,Consumer
+1070,Olivia Khan,Austin,United States,Consumer
+1071,Noah Miller,Lyon,France,Small Business
+1072,Lucas Wilson,Seattle,United States,Corporate
+1073,Hana Larsen,Denver,USA,Corporate
+1074,Liam Miller,Brisbane,Australia,Small Business
+1075,Liam Novak,PARIS,France,Small Business
+1076,EMMA GARCIA,Marseille,France,Corporate
+1077,Hana Dubois,Hamburg,Germany,Small Business
+1078,Omar Dubois,Leeds,UK,Corporate
+1079,Ethan Brown,Chicago,United States,Consumer
+1080,Lina Taylor,Berlin,Germany,Consumer
+1081,Omar Larsen,Marseille,France,Small Business
+1082,Olivia Schmidt,Hamburg,Germany,Consumer
+1083,Ali Moreau,Toronto,Canada,Small Business
+1084,Olivia Novak,Berlin,Germany,Small Business
+1085,Sofia Moreau,Lyon,France,Small Business
+1086,Daniel   Novak,Brisbane,Australia,Consumer
+1087,Lina Johnson,Marseille,France,Corporate
+1088,Olivia Walker,VANCOUVER,Canada,Corporate
+1089,Chloe Smith,Bristol,United Kingdom,Consumer
+1090,Hana Moreau,MUNICH,Germany,Consumer
+1091,Lucas Schmidt,Brisbane,Australia,Small Business
+1092,Lucas Johnson,Denver,United States,Corporate
+1093,Mia Walker,Cologne,Germany,Small Business
+1094,Noah Dubois,Munich,Germany,Consumer
+1095,Ava Johnson,Berlin,Germany,Small Business
+1096,Lucas Larsen,Montreal,Canada,Corporate
+1097,Liam   Miller,Lyon,France,Corporate
+1098,  noah martin ,Seattle,United States,Corporate
+1099,Leo Moreau,Vancouver,Canada,Consumer
+1100,Noah Moreau,Austin,United States,Consumer
+1101,Olivia Khan,Bristol,UK,Corporate
+1102,Leo Dubois,  vancouver ,Canada,Consumer
+1103,Noah Rossi,Leeds,UK,Corporate
+1104,Jonas Walker,Bristol,UK,Consumer
+1105,Lina Smith,Paris,France,Consumer
+1106,Omar Miller,Manchester,UK,Small Business
+1107,SARA SCHMIDT,Marseille,France,Corporate
+1108,Sara Miller,Berlin,Germany,Small Business
+1109,Olivia Larsen,  bristol ,United Kingdom,Corporate
+1110,Chloe Johnson,Berlin,Germany,Corporate
+1111,Noah Larsen,Marseille,France,Corporate
+1112,Nora Schmidt,Cologne,Germany,Consumer
+1113,Olivia Walker,Leeds,UK,Consumer
+1114,Lucas Taylor,Lyon,France,Consumer
+1115,Chloe Brown,Chicago,United States,Small Business
+1116,Ali Novak,Chicago,United States,Small Business
+1117,Jonas Dubois,Melbourne,Australia,Corporate
+1118,Mia Garcia,Hamburg,Germany,Corporate
+1119,Olivia Rossi,New York,USA,Corporate
+1120,Hana Taylor,Austin,United States,Small Business
+1121,Leo Martin,New York,United States,Corporate
+1122,Olivia Wilson,Leeds,United Kingdom,Corporate
+1123,Adam Novak,Hamburg,Germany,Consumer
+1124,Sofia   Johnson,DENVER,USA,Small Business
+1125,Chloe Rossi,Denver,USA,Corporate
+1126,Nora Taylor,Austin,United States,Corporate
+1127,SARA NOVAK,Hamburg,Germany,Corporate
+1128,Adam Rossi,Munich,Germany,Consumer
+1129,  sofia johnson ,  denver ,United States,Consumer
+1130,Sofia Novak,  leeds ,UK,Corporate
+1131,  daniel dubois ,Austin,United States,Corporate
+1132,Lina Wilson,Chicago,United States,Corporate
+1133,  leo schmidt ,Cologne,Germany,Corporate
+1134,Sara Smith,Bristol,United Kingdom,Consumer
+1135,Jonas Taylor,Leeds,United Kingdom,Corporate
+1136,Ethan Dubois,Melbourne,Australia,Small Business
+1137,Adam Brown,Paris,France,Corporate
+1138,  jonas khan ,Manchester,United Kingdom,Small Business
+1139,Liam Brown,Montreal,Canada,Small Business
+1140,Mia Johnson,Berlin,Germany,Small Business
+1141,Nora Moreau,  lyon ,France,Small Business
+1142,Hana Smith,Montreal,Canada,Corporate
+1143,Lina Larsen,  bristol ,United Kingdom,Small Business
+1144,Olivia Khan,Manchester,United Kingdom,Small Business
+1145,Lina Schmidt,Melbourne,Australia,Corporate
+1146,Sara Brown,Chicago,United States,Consumer
+1147,Noah Martin,Seattle,United States,Corporate
+1148,Adam Martin,Bristol,UK,Small Business
+1149,Mia Walker,  lyon ,France,Corporate
+1150,  sofia martin ,Berlin,Germany,Consumer
+1151,Hana Walker,Montreal,Canada,Corporate
+1152,Jonas Walker,Vancouver,Canada,Corporate
+1153,Ali Miller,New York,United States,Consumer
+1154,Sara Wilson,London,United Kingdom,Consumer
+1155,Lucas Smith,Seattle,USA,Consumer
+1156,Daniel Novak,Manchester,UK,Small Business
+1157,Chloe Larsen,Paris,France,Small Business
+1158,Hana Schmidt,Lyon,France,Corporate
+1159,Jonas Garcia,Toronto,Canada,Consumer
+1160,Liam Taylor,Leeds,United Kingdom,Corporate
+1161,Mia Khan,Cologne,Germany,Corporate
+1162,DANIEL WILSON,CHICAGO,United States,Corporate
+1163,Hana Wilson,Seattle,USA,Consumer
+1164,Chloe Walker,Paris,France,Corporate
+1165,Noah Moreau,Marseille,France,Consumer
+1166,OMAR GARCIA,New York,United States,Consumer
+1167,  olivia schmidt ,Melbourne,Australia,Small Business
+1168,Sara Schmidt,Austin,USA,Consumer
+1169,Ava Rossi,Hamburg,Germany,Small Business
+1170,Ava Garcia,Berlin,Germany,Corporate
+1171,Sofia Brown,Cologne,Germany,Consumer
+1172,Mia Miller,Lyon,France,Small Business
+1173,Nora Novak,Berlin,Germany,Small Business
+1174,Mia Smith,Denver,United States,Corporate
+1175,  lucas johnson ,Toronto,Canada,Corporate
+1176,Adam Wilson,Denver,United States,Consumer
+1177,Noah Moreau,Bristol,United Kingdom,Small Business
+1178,Chloe Khan,Munich,Germany,Small Business
+1179,Emma Schmidt,New York,United States,Small Business
+1180,Liam Miller,Denver,United States,Small Business
+1181,Chloe Brown,Brisbane,Australia,Consumer
+1182,Nora   Dubois,Toronto,Canada,Consumer
+1183,Chloe Taylor,Seattle,USA,Corporate
+1184,Emma Brown,Brisbane,Australia,Small Business
+1185,Olivia Wilson,Bristol,UK,Small Business
+1186,Ethan Moreau,Leeds,United Kingdom,Small Business
+1187,ALI DUBOIS,Leeds,United Kingdom,Consumer
+1188,Mia Smith,Bristol,United Kingdom,Consumer
+1189,Lina Johnson,London,United Kingdom,Small Business
+1190,Daniel Wilson,LEEDS,United Kingdom,Small Business
+1191,Adam Rossi,Denver,USA,Consumer
+1192,Liam Schmidt,Chicago,USA,Consumer
+1193,Emma Novak,Austin,United States,Small Business
+1194,Nora Schmidt,Montreal,Canada,Corporate
+1195,Ali Rossi,Denver,United States,Consumer
+1196,Ava Smith,Brisbane,Australia,Corporate
+1197,Omar Wilson,Cologne,Germany,Consumer
+1198,  leo moreau ,Bristol,United Kingdom,Consumer
+1199,  sara wilson ,Melbourne,Australia,Consumer
+1200,Ali Larsen,Montreal,Canada,Consumer
+1201,Omar Johnson,Chicago,USA,Consumer
+1202,Emma Martin,  chicago ,USA,Consumer
+1203,Sofia Novak,  sydney ,Australia,Corporate
+1204,Hana Smith,Paris,France,Consumer
+1205,Ava Martin,New York,United States,Small Business
+1206,Lina   Wilson,Chicago,USA,Small Business
+1207,Daniel Rossi,Hamburg,Germany,Consumer
+1208,Emma Garcia,Bristol,UK,Corporate
+1209,Mia Larsen,Berlin,Germany,Small Business
+1210,Jonas Schmidt,Denver,United States,Small Business
+1211,Leo Dubois,Seattle,United States,Consumer
+1212,Ali Dubois,New York,United States,Consumer
+1213,Omar Brown,Vancouver,Canada,Consumer
+1214,Jonas Dubois,Melbourne,Australia,Corporate
+1215,Chloe Khan,Denver,USA,Corporate
+1216,Mia Smith,Seattle,United States,Consumer
+1217,Daniel Wilson,Bristol,United Kingdom,Consumer
+1218,Ethan Walker,Toronto,Canada,Small Business
+1219,  hana moreau ,New York,United States,Consumer
+1220,OMAR TAYLOR,Brisbane,Australia,Corporate
+1221,Leo Walker,Leeds,United Kingdom,Small Business
+1222,ALI ROSSI,Seattle,United States,Consumer
+1223,Olivia Brown,PARIS,France,Small Business
+1224,Hana Rossi,Denver,United States,Corporate
+1225,Mia Moreau,Toronto,Canada,Corporate
+1226,  ali smith ,Lyon,France,Corporate
+1227,Ali Rossi,Lyon,France,Corporate
+1228,Chloe Wilson,Munich,Germany,Consumer
+1229,Ethan Brown,Leeds,United Kingdom,Corporate
+1230,Lina Khan,Leeds,UK,Corporate
+1231,Chloe Miller,Seattle,United States,Corporate
+1232,Emma Schmidt,Seattle,United States,Small Business
+1233,LUCAS KHAN,Bristol,UK,Small Business
+1234,Noah Dubois,Denver,United States,Consumer
+1235,Jonas Larsen,Munich,Germany,Corporate
+1236,  sara moreau ,Manchester,United Kingdom,Small Business
+1237,Liam Novak,Vancouver,Canada,Corporate
+1238,Chloe Martin,Manchester,UK,Consumer
+1239,Leo Walker,London,United Kingdom,Consumer
+1240,Jonas Taylor,  munich ,Germany,Corporate

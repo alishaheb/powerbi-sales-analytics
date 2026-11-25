@@ -1,0 +1,70 @@
+/// Customer dimension. Loaded with Power Query from Data\Customers.csv and cleaned with fnCleanText.
+table Customer
+	lineageTag: 4b3e1fb9-e07e-51af-8bfe-eb6563ee78fa
+
+	column 'Customer ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 80437a95-e44d-57c9-83e9-5ef294ca22fe
+		summarizeBy: none
+		sourceColumn: Customer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: 4cf89d21-7db1-5d97-a174-67a6f679be4b
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: b02a9bbb-db94-527e-b126-2c7620b27804
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 832a04bb-a4c6-5385-a68a-a2723e36ae4b
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: 0304e5d8-e676-512c-b08f-a7a5a5405c07
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customer = m
+		mode: import
+		source =
+				let
+					FolderPath = if Text.EndsWith(DataFolder, "\") then DataFolder else DataFolder & "\",
+					Source = Csv.Document(File.Contents(FolderPath & "Customers.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Promoted,
+						{{"CustomerID", Int64.Type}, {"CustomerName", type text}, {"City", type text}, {"Country", type text}, {"Segment", type text}},
+						"en-US"
+					),
+					// Clean names with the custom function fnCleanText
+					Cleaned = Table.TransformColumns(Typed, {{"CustomerName", fnCleanText, type text}, {"City", fnCleanText, type text}, {"Segment", Text.Trim, type text}}),
+					// Use one name for each country
+					CountryMap = [USA = "United States", UK = "United Kingdom"],
+					FixedCountry = Table.TransformColumns(Cleaned, {{"Country", each Record.FieldOrDefault(CountryMap, Text.Trim(_), Text.Trim(_)), type text}}),
+					Renamed = Table.RenameColumns(FixedCountry, {{"CustomerID", "Customer ID"}, {"CustomerName", "Customer Name"}})
+				in
+					Renamed
+
+	annotation PBI_ResultType = Table

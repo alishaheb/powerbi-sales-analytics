@@ -1,0 +1,25 @@
+ProductID,ProductName,Category,Subcategory,UnitCost,ListPrice
+101,Wireless Mouse,Electronics,Computer Accessories,9.50,24.99
+102,Mechanical Keyboard,Electronics,Computer Accessories,38.00,89.99
+103,USB-C Hub,Electronics,Computer Accessories,14.00,39.99
+104,27in Monitor,Electronics,Computer Accessories,145.00,279.00
+105,Noise-Cancelling Headset,Electronics,Computer Accessories,62.00,149.00
+106,Webcam HD,Electronics,Computer Accessories,21.00,54.99
+107,Standing Desk,Furniture,Office Furniture,210.00,449.00
+108,Ergonomic Chair,Furniture,Office Furniture,160.00,329.00
+109,Bookshelf,Furniture,Office Furniture,55.00,119.00
+110,Filing Cabinet,Furniture,Office Furniture,48.00,99.00
+111,Desk Lamp,Furniture,Office Furniture,12.00,32.99
+112,Monitor Arm,Furniture,Office Furniture,28.00,69.99
+113,Notebook A5 (3-pack),Office Supplies,Paper & Writing,2.10,7.99
+114,Gel Pens (12-pack),Office Supplies,Paper & Writing,3.00,11.49
+115,Printer Paper (500 sheets),Office Supplies,Paper & Writing,3.40,8.99
+116,Sticky Notes (6-pack),Office Supplies,Paper & Writing,1.80,6.49
+117,Whiteboard Markers,Office Supplies,Paper & Writing,2.60,9.99
+118,Desk Organizer,Office Supplies,Paper & Writing,6.50,19.99
+119,Laptop Backpack,Outdoor,Travel & Outdoor,24.00,64.99
+120,Insulated Bottle,Outdoor,Travel & Outdoor,7.50,24.99
+121,Travel Mug,Outdoor,Travel & Outdoor,5.20,17.99
+122,Folding Umbrella,Outdoor,Travel & Outdoor,6.00,21.99
+123,Picnic Blanket,Outdoor,Travel & Outdoor,11.00,34.99
+124,Camping Lantern,Outdoor,Travel & Outdoor,13.50,39.99

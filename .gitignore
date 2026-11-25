@@ -1,0 +1,6 @@
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Not part of the project
+Claude outputs/
+.DS_Store

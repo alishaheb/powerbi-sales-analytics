@@ -1,0 +1,146 @@
+/// Fact table: one row per order line. Loaded with Power Query from all CSV files in Data\Sales.
+table Sales
+	lineageTag: 6bedbc31-0d6d-5f1d-84fb-f3b88117a430
+
+	column 'Order ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 99e58374-ff40-5d51-ad0f-4cfd8abd86d6
+		summarizeBy: none
+		sourceColumn: Order ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Line'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7d9276bd-50e0-5bf9-85d6-98d3c03cfdcd
+		summarizeBy: none
+		sourceColumn: Order Line
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 937dbcc5-90c1-5e87-ad32-e28c603088e1
+		summarizeBy: none
+		sourceColumn: Order Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Customer ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c93f03a2-901e-5dd7-abb5-1bcb3e7e5518
+		summarizeBy: none
+		sourceColumn: Customer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c0b4b593-c190-513f-b47b-ccba62d5f06a
+		summarizeBy: none
+		sourceColumn: Product ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: #,0
+		lineageTag: eb9f0bab-73e9-57f8-bf24-5048ce553036
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Price'
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 51040011-7bd8-5e7c-b492-ebaf6fb10bb5
+		summarizeBy: none
+		sourceColumn: Unit Price
+
+		annotation SummarizationSetBy = User
+
+	column 'Discount %'
+		dataType: double
+		formatString: 0%
+		lineageTag: 6bc86d32-e025-5645-b4e9-ad99d8d0a783
+		summarizeBy: none
+		sourceColumn: Discount %
+
+		annotation SummarizationSetBy = User
+
+	/// Power Query column: Quantity x Unit Price x (1 - Discount %), rounded to 2 decimals.
+	column 'Line Amount'
+		dataType: double
+		formatString: #,0.00
+		lineageTag: db2b486c-0920-57f0-b692-144830a15fc9
+		summarizeBy: sum
+		sourceColumn: Line Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	/// DAX calculated column: cost of the line, from the related product.
+	column 'Line Cost' = Sales[Quantity] * RELATED ( 'Product'[Unit Cost] )
+		formatString: #,0.00
+		lineageTag: dd1d988f-9608-5381-9fb0-2bc92f91a183
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+					// Make sure the folder path ends with "\"
+					FolderPath = if Text.EndsWith(DataFolder, "\") then DataFolder else DataFolder & "\",
+					// 1. Get all CSV files in the Data\Sales folder (one file for each year)
+					Files = Folder.Files(FolderPath & "Sales"),
+					CsvFiles = Table.SelectRows(Files, each Text.Lower([Extension]) = ".csv" and Text.StartsWith([Name], "Sales_")),
+					// 2. Read each file and use the first row as column names
+					WithData = Table.AddColumn(CsvFiles, "Data", each Table.PromoteHeaders(Csv.Document([Content], [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]), [PromoteAllScalars = true])),
+					// 3. Append all years into one table
+					Combined = Table.Combine(WithData[Data]),
+					// 4. Empty discount cells become null, then set the data types (en-US, so "12.50" is read the same on all computers)
+					BlankToNull = Table.ReplaceValue(Combined, "", null, Replacer.ReplaceValue, {"Discount"}),
+					Typed = Table.TransformColumnTypes(
+						BlankToNull,
+						{
+							{"OrderID", Int64.Type}, {"OrderLine", Int64.Type}, {"OrderDate", type date},
+							{"CustomerID", Int64.Type}, {"ProductID", Int64.Type}, {"Quantity", Int64.Type},
+							{"UnitPrice", type number}, {"Discount", type number}
+						},
+						"en-US"
+					),
+					// 5. Data quality: no discount = 0, remove rows with no quantity, remove duplicate order lines
+					NoNullDiscount = Table.ReplaceValue(Typed, null, 0, Replacer.ReplaceValue, {"Discount"}),
+					ValidRows = Table.SelectRows(NoNullDiscount, each [Quantity] > 0),
+					NoDuplicates = Table.Distinct(ValidRows, {"OrderID", "OrderLine"}),
+					// 6. Friendly column names
+					Renamed = Table.RenameColumns(
+						NoDuplicates,
+						{
+							{"OrderID", "Order ID"}, {"OrderLine", "Order Line"}, {"OrderDate", "Order Date"},
+							{"CustomerID", "Customer ID"}, {"ProductID", "Product ID"},
+							{"UnitPrice", "Unit Price"}, {"Discount", "Discount %"}
+						}
+					),
+					// 7. New column: net amount of the line after discount
+					AddLineAmount = Table.AddColumn(Renamed, "Line Amount", each Number.Round([Quantity] * [Unit Price] * (1 - [#"Discount %"]), 2), type number),
+					Result = Table.SelectColumns(
+						AddLineAmount,
+						{"Order ID", "Order Line", "Order Date", "Customer ID", "Product ID", "Quantity", "Unit Price", "Discount %", "Line Amount"}
+					)
+				in
+					Result
+
+	annotation PBI_ResultType = Table

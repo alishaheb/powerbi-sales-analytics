@@ -1,0 +1,159 @@
+/// Table that holds all DAX measures. It has one hidden placeholder column and no rows.
+table _Measures
+	lineageTag: c4089b6e-6933-5fba-ae46-97ccc31ed8fe
+
+	/// Net sales after discount.
+	measure 'Sales Amount' = SUM ( Sales[Line Amount] )
+		formatString: #,0
+		displayFolder: 1. Sales
+		lineageTag: eb8b07f6-3d36-5ce7-aa39-696ff79a0705
+
+	/// Sales before discount. Uses the iterator SUMX.
+	measure 'Gross Sales' = SUMX ( Sales, Sales[Quantity] * Sales[Unit Price] )
+		formatString: #,0
+		displayFolder: 1. Sales
+		lineageTag: 1cb46112-c823-5abe-a1fc-b91608f82b66
+
+	measure 'Discount Amount' = [Gross Sales] - [Sales Amount]
+		formatString: #,0
+		displayFolder: 1. Sales
+		lineageTag: 09fefeb1-e9e4-50af-9169-8a0278ce9118
+
+	/// Uses the DAX calculated column Sales[Line Cost].
+	measure 'Total Cost' = SUM ( Sales[Line Cost] )
+		formatString: #,0
+		displayFolder: 1. Sales
+		lineageTag: 2c1efd9e-8df4-5a0c-9f8c-54cfb1db02e3
+
+	measure 'Gross Profit' = [Sales Amount] - [Total Cost]
+		formatString: #,0
+		displayFolder: 1. Sales
+		lineageTag: b839b9c1-b867-51c5-94ac-bcb7114a4248
+
+	measure 'Gross Margin %' = DIVIDE ( [Gross Profit], [Sales Amount] )
+		formatString: 0.0%
+		displayFolder: 1. Sales
+		lineageTag: 3b996dd8-54bb-5dd2-a722-5c66d6deeb70
+
+	measure 'Units Sold' = SUM ( Sales[Quantity] )
+		formatString: #,0
+		displayFolder: 1. Sales
+		lineageTag: 3f6a360b-a571-59f8-88c6-31f035db46c1
+
+	measure Orders = DISTINCTCOUNT ( Sales[Order ID] )
+		formatString: #,0
+		displayFolder: 1. Sales
+		lineageTag: be5cd5a2-d454-5ab2-a312-85dd17832eda
+
+	measure 'Avg Order Value' = DIVIDE ( [Sales Amount], [Orders] )
+		formatString: #,0.00
+		displayFolder: 1. Sales
+		lineageTag: a41f4af4-3706-5aa4-b2c5-747022ffdeec
+
+	/// Customers who bought something in the selected period.
+	measure 'Active Customers' = DISTINCTCOUNT ( Sales[Customer ID] )
+		formatString: #,0
+		displayFolder: 2. Customers
+		lineageTag: 7dc91077-f8a6-56bd-a0e2-83fa00e7fa24
+
+	/// Customers whose first order (ignoring date filters) is inside the selected period.
+	measure 'New Customers' =
+			VAR PeriodStart = MIN ( 'Date'[Date] )
+			VAR CustomersInPeriod = VALUES ( Sales[Customer ID] )
+			RETURN
+				COUNTROWS (
+					FILTER (
+						CustomersInPeriod,
+						CALCULATE ( MIN ( Sales[Order Date] ), REMOVEFILTERS ( 'Date' ) ) >= PeriodStart
+					)
+				)
+		formatString: #,0
+		displayFolder: 2. Customers
+		lineageTag: 0837d76b-250b-56b7-8ad9-525ec97d8d55
+
+	measure 'Sales YTD' = TOTALYTD ( [Sales Amount], 'Date'[Date] )
+		formatString: #,0
+		displayFolder: 3. Time Intelligence
+		lineageTag: 0e0d79b6-ebaf-576f-8335-e395b40e31ff
+
+	/// Sales in the same period of the previous year.
+	measure 'Sales PY' = CALCULATE ( [Sales Amount], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+		formatString: #,0
+		displayFolder: 3. Time Intelligence
+		lineageTag: b85c6064-d5eb-5db5-bce7-c3917a192b9f
+
+	measure 'Sales YoY %' =
+			VAR CurrentSales = [Sales Amount]
+			VAR PreviousSales = [Sales PY]
+			RETURN
+				DIVIDE ( CurrentSales - PreviousSales, PreviousSales )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 3. Time Intelligence
+		lineageTag: 15b579d8-8cc3-50f8-9d89-cd620aa84961
+
+	/// Sales in the last 3 months, up to the last date in the current filter.
+	measure 'Sales Rolling 3M' =
+			VAR LastVisibleDate = MAX ( 'Date'[Date] )
+			RETURN
+				CALCULATE ( [Sales Amount], DATESINPERIOD ( 'Date'[Date], LastVisibleDate, -3, MONTH ) )
+		formatString: #,0
+		displayFolder: 3. Time Intelligence
+		lineageTag: bd7f2307-318f-506c-8f5d-55e212b539ee
+
+	measure 'Target Amount' = SUM ( Target[Target Amount] )
+		formatString: #,0
+		displayFolder: 4. Targets
+		lineageTag: ac1eeef6-8165-57dd-8777-fcf3d3b78ae1
+
+	measure 'Sales vs Target %' = DIVIDE ( [Sales Amount], [Target Amount] )
+		formatString: 0.0%
+		displayFolder: 4. Targets
+		lineageTag: 313b8c4e-56c8-50c4-bacc-adbaa426b920
+
+	measure 'Target Variance' = [Sales Amount] - [Target Amount]
+		formatString: +#,0;-#,0;0
+		displayFolder: 4. Targets
+		lineageTag: 94bdfb89-26ed-5b8e-ab43-32d5ec8bc875
+
+	/// Rank of the product by Sales Amount, inside the current selection (for example inside one category).
+	measure 'Product Rank' =
+			IF (
+				ISINSCOPE ( 'Product'[Product Name] ),
+				RANKX ( ALLSELECTED ( 'Product'[Product Name] ), [Sales Amount], , DESC, DENSE )
+			)
+		formatString: 0
+		displayFolder: 5. Ranking and Share
+		lineageTag: 66906d92-bec1-5434-aab3-abf92510a956
+
+	/// Share of the visual total.
+	measure 'Sales % of Total' = DIVIDE ( [Sales Amount], CALCULATE ( [Sales Amount], ALLSELECTED () ) )
+		formatString: 0.0%
+		displayFolder: 5. Ranking and Share
+		lineageTag: 85d87b5b-2a71-5d51-a37a-cc79e7abc1b0
+
+	/// Name of the product with the highest Sales Amount in the current filter.
+	measure 'Top Product' =
+			VAR TopRow = TOPN ( 1, VALUES ( 'Product'[Product Name] ), [Sales Amount], DESC )
+			RETURN
+				IF ( NOT ISBLANK ( [Sales Amount] ), MAXX ( TopRow, 'Product'[Product Name] ) )
+		displayFolder: 5. Ranking and Share
+		lineageTag: 92c15e78-b9fa-543e-84bb-a8f0b6ee7cca
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: d48ec073-b2f0-5815-9a16-0eaabdeb95f0
+		summarizeBy: none
+		sourceColumn: Placeholder
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+					Source = #table(type table [Placeholder = text], {})
+				in
+					Source
+
+	annotation PBI_ResultType = Table

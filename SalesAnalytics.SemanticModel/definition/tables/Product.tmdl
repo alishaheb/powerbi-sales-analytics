@@ -1,0 +1,94 @@
+/// Product dimension. Loaded with Power Query from Data\Products.csv.
+table Product
+	lineageTag: 47fb81f6-6cac-5abd-b398-df133fab89dd
+
+	column 'Product ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ec675c4b-2da1-5aee-9b8c-92fd62c363e7
+		summarizeBy: none
+		sourceColumn: Product ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Name'
+		dataType: string
+		lineageTag: 08fd7195-739a-52c6-9a51-e72d39c576dd
+		summarizeBy: none
+		sourceColumn: Product Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		isHidden
+		lineageTag: 582c49ea-6d30-5b30-8cd1-97b411790fb6
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subcategory
+		dataType: string
+		lineageTag: a76b8d1a-d4d8-5581-8f07-e1e40ba682c1
+		summarizeBy: none
+		sourceColumn: Subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Cost'
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 5ca8672c-17c2-57aa-9594-e01cce8bd80b
+		summarizeBy: none
+		sourceColumn: Unit Cost
+
+		annotation SummarizationSetBy = User
+
+	column 'List Price'
+		dataType: double
+		formatString: #,0.00
+		lineageTag: cc90b648-21f9-5bae-9b0f-d4ecff18f637
+		summarizeBy: none
+		sourceColumn: List Price
+
+		annotation SummarizationSetBy = User
+
+	/// DAX calculated column: groups products by list price.
+	column 'Price Band' =
+			SWITCH (
+				TRUE (),
+				'Product'[List Price] < 25, "Under 25",
+				'Product'[List Price] < 100, "25 to 99",
+				"100 and over"
+			)
+		lineageTag: 6206ad1a-2a2b-5c37-8f6b-b7fe9fa92813
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Product = m
+		mode: import
+		source =
+				let
+					FolderPath = if Text.EndsWith(DataFolder, "\") then DataFolder else DataFolder & "\",
+					Source = Csv.Document(File.Contents(FolderPath & "Products.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					Typed = Table.TransformColumnTypes(
+						Promoted,
+						{
+							{"ProductID", Int64.Type}, {"ProductName", type text}, {"Category", type text},
+							{"Subcategory", type text}, {"UnitCost", type number}, {"ListPrice", type number}
+						},
+						"en-US"
+					),
+					Trimmed = Table.TransformColumns(Typed, {{"ProductName", Text.Trim, type text}, {"Category", Text.Trim, type text}, {"Subcategory", Text.Trim, type text}}),
+					Renamed = Table.RenameColumns(
+						Trimmed,
+						{{"ProductID", "Product ID"}, {"ProductName", "Product Name"}, {"UnitCost", "Unit Cost"}, {"ListPrice", "List Price"}}
+					)
+				in
+					Renamed
+
+	annotation PBI_ResultType = Table

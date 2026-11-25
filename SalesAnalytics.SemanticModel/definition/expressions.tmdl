@@ -1,0 +1,21 @@
+/// Folder that holds the CSV files (the "Data" folder of this project). Change it in Power BI Desktop: Transform data > Edit parameters.
+expression DataFolder = "C:\power_bi\Data\" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 4f490d7f-020a-5930-b5f2-d34988380d34
+
+	annotation PBI_ResultType = Text
+
+/// Custom Power Query function. Cleans a text value: removes control characters, trims, removes double spaces and uses Proper Case.
+expression fnCleanText =
+		(value as nullable text) as nullable text =>
+			if value = null then
+				null
+			else
+				let
+					Cleaned = Text.Trim(Text.Clean(value)),
+					Words = List.Select(Text.Split(Cleaned, " "), each _ <> ""),
+					Result = Text.Proper(Text.Combine(Words, " "))
+				in
+					Result
+	lineageTag: ba6c7165-ad5c-5a43-bea4-8fb80c84d45c
+
+	annotation PBI_ResultType = Function

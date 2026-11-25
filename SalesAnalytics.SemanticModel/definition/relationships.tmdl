@@ -1,0 +1,23 @@
+relationship 25ff0433-e917-5327-bf0a-c4cdfb2d9a2c
+	fromColumn: Sales.'Order Date'
+	toColumn: Date.Date
+
+relationship d0de3ed8-3753-54a1-8540-0b998bcd5d35
+	fromColumn: Sales.'Product ID'
+	toColumn: Product.'Product ID'
+
+relationship bcb2dc4a-a2ae-5e9f-b2c7-8dd48bcf8757
+	fromColumn: Sales.'Customer ID'
+	toColumn: Customer.'Customer ID'
+
+relationship e0a1252c-989e-511b-8246-94d52f33fcb8
+	fromColumn: Product.Category
+	toColumn: Category.Category
+
+relationship ee670d4e-65ff-5de8-8696-b5c281e37cc5
+	fromColumn: Target.Category
+	toColumn: Category.Category
+
+relationship 1efaecdf-e7e3-5b18-96ec-4056f4a89e0a
+	fromColumn: Target.'Month Start'
+	toColumn: Date.Date

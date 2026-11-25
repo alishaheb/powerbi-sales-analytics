@@ -1,0 +1,24 @@
+/// Category dimension. Power Query makes it from the Product query (distinct categories), so Sales and Target can share one Category filter.
+table Category
+	lineageTag: 99b969fa-f42f-5cb6-85a3-d905f530098b
+
+	column Category
+		dataType: string
+		isKey
+		lineageTag: 00c6993d-d839-5f4a-99d3-0b08ae78ae5f
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Category = m
+		mode: import
+		source =
+				let
+					Source = Product,
+					Categories = Table.Distinct(Table.SelectColumns(Source, {"Category"})),
+					Sorted = Table.Sort(Categories, {{"Category", Order.Ascending}})
+				in
+					Sorted
+
+	annotation PBI_ResultType = Table

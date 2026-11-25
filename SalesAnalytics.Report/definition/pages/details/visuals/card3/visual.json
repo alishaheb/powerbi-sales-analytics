@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "card3",
+  "position": {
+    "x": 1116,
+    "y": 84,
+    "z": 4200,
+    "height": 100,
+    "width": 144,
+    "tabOrder": 4200
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Top Product"
+                }
+              },
+              "queryRef": "_Measures.Top Product",
+              "nativeQueryRef": "Top Product"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

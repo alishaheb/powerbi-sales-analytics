@@ -1,0 +1,125 @@
+/// Date dimension, made in Power Query. It covers full years from the first to the last order date. Marked as a date table for DAX time intelligence.
+table Date
+	lineageTag: 368c3b1c-aa45-5789-b814-ae93b513cbee
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: ae0be45f-d71a-5563-9db9-e825902eb85c
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a13ff1a-127e-5ddb-903c-1aa245b4fe6e
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = User
+
+	column Quarter
+		dataType: string
+		lineageTag: 72ba5209-bdc4-567f-8fbf-c1c89d5d0f21
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b4f55493-8386-5676-9a76-45cffa9648d4
+		summarizeBy: none
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = User
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: afbd1ea7-09d8-5eb4-9b8d-3674ade78e62
+		summarizeBy: none
+		sourceColumn: Month Name
+		sortByColumn: 'Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year'
+		dataType: string
+		lineageTag: 528473e5-de90-51a5-be4a-df6ea13a89db
+		summarizeBy: none
+		sourceColumn: Month Year
+		sortByColumn: 'Year Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 66526e68-418d-5b82-ade0-13f4bfd00831
+		summarizeBy: none
+		sourceColumn: Year Month Number
+
+		annotation SummarizationSetBy = User
+
+	column 'Weekday Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0808134d-097a-5044-99a6-e97d415698e9
+		summarizeBy: none
+		sourceColumn: Weekday Number
+
+		annotation SummarizationSetBy = User
+
+	column 'Weekday Name'
+		dataType: string
+		lineageTag: cf105610-e668-5314-95e5-63c125c8ef74
+		summarizeBy: none
+		sourceColumn: Weekday Name
+		sortByColumn: 'Weekday Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Weekend'
+		dataType: boolean
+		lineageTag: 1ff1e163-4949-59fd-b253-7d65c1ca6b91
+		summarizeBy: none
+		sourceColumn: Is Weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = m
+		mode: import
+		source =
+				let
+					// Use the order dates from the Sales query to find the first and last year
+					OrderDates = Sales[Order Date],
+					StartDate = #date(Date.Year(List.Min(OrderDates)), 1, 1),
+					EndDate = #date(Date.Year(List.Max(OrderDates)), 12, 31),
+					DayCount = Duration.Days(EndDate - StartDate) + 1,
+					DateList = List.Dates(StartDate, DayCount, #duration(1, 0, 0, 0)),
+					AsTable = Table.FromList(DateList, Splitter.SplitByNothing(), {"Date"}),
+					Typed = Table.TransformColumnTypes(AsTable, {{"Date", type date}}),
+					AddYear = Table.AddColumn(Typed, "Year", each Date.Year([Date]), Int64.Type),
+					AddQuarter = Table.AddColumn(AddYear, "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date])), type text),
+					AddMonthNumber = Table.AddColumn(AddQuarter, "Month Number", each Date.Month([Date]), Int64.Type),
+					AddMonthName = Table.AddColumn(AddMonthNumber, "Month Name", each Date.ToText([Date], [Format = "MMM", Culture = "en-US"]), type text),
+					AddMonthYear = Table.AddColumn(AddMonthName, "Month Year", each Date.ToText([Date], [Format = "MMM yyyy", Culture = "en-US"]), type text),
+					AddYearMonthNumber = Table.AddColumn(AddMonthYear, "Year Month Number", each Date.Year([Date]) * 100 + Date.Month([Date]), Int64.Type),
+					// Monday = 1 ... Sunday = 7
+					AddWeekdayNumber = Table.AddColumn(AddYearMonthNumber, "Weekday Number", each Date.DayOfWeek([Date], Day.Monday) + 1, Int64.Type),
+					AddWeekdayName = Table.AddColumn(AddWeekdayNumber, "Weekday Name", each Date.ToText([Date], [Format = "ddd", Culture = "en-US"]), type text),
+					AddIsWeekend = Table.AddColumn(AddWeekdayName, "Is Weekend", each [Weekday Number] >= 6, type logical)
+				in
+					AddIsWeekend
+
+	annotation PBI_ResultType = Table

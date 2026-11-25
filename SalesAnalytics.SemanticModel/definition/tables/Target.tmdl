@@ -1,0 +1,52 @@
+/// Monthly sales targets by category. Data\Targets.csv has one column per month; Power Query unpivots it to one row per category and month.
+table Target
+	lineageTag: 9129bebe-4717-517f-8c14-c3593452af99
+
+	column Category
+		dataType: string
+		isHidden
+		lineageTag: 58c8866e-882e-5c9d-9615-98608e731639
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Start'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 74f50cca-c99f-5cd0-bb15-bafa46700cf5
+		summarizeBy: none
+		sourceColumn: Month Start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Target Amount'
+		dataType: double
+		formatString: #,0
+		lineageTag: 314890d3-e8e4-55dd-b2b0-2465ee87d42c
+		summarizeBy: sum
+		sourceColumn: Target Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Target = m
+		mode: import
+		source =
+				let
+					FolderPath = if Text.EndsWith(DataFolder, "\") then DataFolder else DataFolder & "\",
+					Source = Csv.Document(File.Contents(FolderPath & "Targets.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					// Wide to long: one row for each Category, Year and Month
+					Unpivoted = Table.UnpivotOtherColumns(Promoted, {"Category", "Year"}, "Month", "Target Amount"),
+					MonthNames = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"},
+					AddMonthStart = Table.AddColumn(Unpivoted, "Month Start", each #date(Number.From([Year]), List.PositionOf(MonthNames, [Month]) + 1, 1), type date),
+					Typed = Table.TransformColumnTypes(AddMonthStart, {{"Category", type text}, {"Target Amount", type number}}, "en-US"),
+					Trimmed = Table.TransformColumns(Typed, {{"Category", Text.Trim, type text}}),
+					Result = Table.SelectColumns(Trimmed, {"Category", "Month Start", "Target Amount"})
+				in
+					Result
+
+	annotation PBI_ResultType = Table
